@@ -22,5 +22,6 @@ void publish_init();
 void iot_loop();
 void iot_publish(const char *topic, const char *payload, bool retained = true);
 void iot_reset();
+bool iot_isConnected();
 
 #endif

@@ -13,17 +13,24 @@
 
 #define HOUR_MULTIPLIER 3600000000ULL
 
+// sirene Serial Number, empty string if not used
+#define SIRENE_SN "1S12345"
+
 typedef struct {
   bool emergency;
   bool button;
   bool mqtt;
-  bool charge;
 } DeviceStatus;
 
 typedef struct {
-  bool charging;
+  bool isCharging;
   float voltage;
   int percentage;
 } Battery;
+
+typedef struct {
+  int onDelay;
+  int offDelay;
+} Led;
 
 #endif

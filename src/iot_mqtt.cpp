@@ -83,3 +83,7 @@ void iot_publish(const char *topic, const char *payload, bool retained) {
 void iot_reset() {
   iot.reset();
 }
+
+bool iot_isConnected() {
+  return iot.mqtt->connected();
+}
