@@ -51,7 +51,7 @@ void publish_init() {
     iot.mqtt->publish(iot.constructTopic("sensor/$name"), "Sensor", false);
     iot.mqtt->publish(iot.constructTopic("sensor/$type"), "Sensor-01", false);
     iot.mqtt->publish(iot.constructTopic("sensor/$properties"), "bahaya", false);
-    iot.mqtt->publish(iot.constructTopic("sensor/$properties"), "emergency, battery", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/$properties"), "emergency,battery", false);
 
     // emergency alarm
     iot.mqtt->publish(iot.constructTopic("sensor/emergency/$name"), "EMERGENCY", false);
@@ -76,7 +76,11 @@ void iot_loop(void) {
 
 void iot_publish(const char *topic, const char *payload, bool retained) {
   if (iot.mqtt->connected()) {
-    iot.mqtt->publish(iot.constructTopic(topic), payload, retained);
+    if (topic[0] == '1') {
+      iot.mqtt->publish(topic, payload, retained);
+    } else
+      iot.mqtt->publish(iot.constructTopic(topic), payload, retained);
+    Serial.printf("publishing %s : %s\n", topic, payload);
   }
 }
 
