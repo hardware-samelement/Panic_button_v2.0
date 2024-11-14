@@ -33,8 +33,6 @@ void my_espnow_init(void) {
     uint8_t temp2[6];
 
     for (int i = 0; i < 6; i++) {
-      // Serial.println(temp2[i], HEX);
-      Serial.println("asw");
       temp2[i] = (uint8_t)temp[i];
     }
     memcpy(peerInfo.peer_addr, temp2, 6);
@@ -44,6 +42,7 @@ void my_espnow_init(void) {
     peerInfo.encrypt = peerDataJson["encrypt"];
     Serial.println(peerInfo.encrypt);
   }
+
   WiFi.mode(WIFI_MODE_STA);
   getMacAddress();
 

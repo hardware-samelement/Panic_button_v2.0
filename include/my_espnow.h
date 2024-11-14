@@ -12,6 +12,7 @@ enum DeviceModel {
 
 typedef struct {
   uint8_t msgType;
+  uint8_t model = SAM_EB;
   bool emergencyStatus;
 } Struct_Data;
 
