@@ -8,6 +8,8 @@ DeviceStatus status;
 Battery battery;
 Led led;
 
+int buzzerDelay = 700;
+
 Struct_Data myData;
 
 bool pairingMode = false;
@@ -27,15 +29,15 @@ void setup() {
   pinConfig();
   Serial.begin(115200);
 
-  esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, LOW);
+  esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, HIGH);
   batteryCalculate();
 
-  // xTaskCreate(task_button, "button", 1024 *2, NULL, 1, NULL);   // locked NC switch
-  xTaskCreate(task_button2, "button2", 1024 * 2, NULL, 1, NULL); // momentary NO switch
+  xTaskCreate(task_wifi, "wifi", 1024 * 8, NULL, 3, NULL);
+  // xTaskCreate(task_espnow, "esp now", 1024 * 3, NULL, 2, NULL);
+  xTaskCreate(task_button, "button", 1024 * 2, NULL, 1, NULL); // locked NC switch
+  // xTaskCreate(task_button2, "button2", 1024 * 2, NULL, 1, NULL); // momentary NO switch
   xTaskCreate(task_led, "led", 1024, NULL, 1, NULL);
   xTaskCreate(task_buzzer, "buzzer", 1024, NULL, 1, NULL);
-  // xTaskCreate(task_wifi, "wifi", 1024 * 8, NULL, 3, NULL);
-  xTaskCreate(task_espnow, "esp now", 1024 * 3, NULL, 2, NULL);
 }
 
 void loop() {
@@ -151,12 +153,13 @@ void task_button2(void *pvParameter) {
 }
 
 void task_buzzer(void *pvParameter) {
+
   while (1) {
     if (status.emergency) {
       digitalWrite(PIN_BUZZER, HIGH);
-      vTaskDelay(500);
+      vTaskDelay(buzzerDelay);
       digitalWrite(PIN_BUZZER, LOW);
-      vTaskDelay(500);
+      vTaskDelay(buzzerDelay);
     } else {
       vTaskDelay(10);
     }
@@ -192,16 +195,27 @@ void task_wifi(void *pvParameter) {
 
     if (iot_isConnected()) {
       led.onDelay = 100;
+      buzzerDelay = 400;
       // send battery information
       if (battery.isCharging) {
-        iot_publish("sensor/battery", "Charging");
+        iot_publish("sensor/status", "Charging");
       } else {
         if (battery.voltage > 4.8) {
-          iot_publish("sensor/battery", "No Battery");
+          iot_publish("sensor/status", "No Battery");
         } else {
-          iot_publish("sensor/battery", (String(battery.percentage) + "%").c_str());
+          iot_publish("sensor/status", "On Battery");
+
+          // if (battery.percentage < 10) {
+          //   iot_publish("sensor/battery", "<10%");
+          // } else
+          //   iot_publish("sensor/battery", (String(battery.percentage) + "%").c_str());
         }
       }
+
+      // batt
+      char batteryPercentageBuffer[3];
+      sprintf(batteryPercentageBuffer, "%d", battery.percentage);
+      iot_publish("sensor/battery", batteryPercentageBuffer);
 
       // send emergency
       while (status.emergency) {
@@ -212,6 +226,7 @@ void task_wifi(void *pvParameter) {
             char sirene_topic[50];
             sprintf(sirene_topic, "1/%s/relay/onoff/set", SIRENE_SN);
             iot_publish(sirene_topic, "true");
+            // iot_publish("1/1S1537370/relay/onoff/set", "true");
           }
         }
         Serial.println(counter);
@@ -224,6 +239,7 @@ void task_wifi(void *pvParameter) {
         char sirene_topic[50];
         sprintf(sirene_topic, "1/%s/relay/onoff/set", SIRENE_SN);
         iot_publish(sirene_topic, "false");
+        // iot_publish("1/1S1537370/relay/onoff/set", "false");
       }
     } else {
       led.onDelay = 500;
@@ -293,12 +309,12 @@ void batteryCalculate(void) {
   battery.voltage = ((adc_read / 4096.0 * 3.3) + 0.15) * 2; //*2 to compensate the voltage divider
   battery.voltage = round(battery.voltage * 100) / 100.0;   // rounding
 
-  if (battery.voltage < 3.3) {
-    battery.percentage = 0;
-  } else if (battery.voltage > 4.2) {
+  if (battery.voltage < 3.5) {
+    battery.percentage = 5;
+  } else if (battery.voltage > 4.0) {
     battery.percentage = 100;
   } else {
-    battery.percentage = map(battery.voltage * 100, 350, 420, 0, 100);
+    battery.percentage = map(battery.voltage * 100, 350, 400, 6, 100);
   }
 
   digitalWrite(PIN_BAT_ADC_ENABLE, LOW);

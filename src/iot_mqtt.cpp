@@ -16,6 +16,7 @@ void iot_init(void) {
   iot.onConnect = callbackOnConnect;
   iot.onAPConfigTimeout = callbackOnAPConfigTimeout;
   iot.onWiFiConnectTimeout = callbackOnWiFiConnectTimeout;
+  iot.onWiFiConfigChanged = callbackOnWifiChanged;
 
   iot.init(DEBUG ? SerialDEBUG : NULL);
   delay(100);
@@ -31,6 +32,11 @@ void callbackOnWiFiConnectTimeout(void) {
 
 void callbackOnAPConfigTimeout(void) {
   ESP.deepSleep(24 * HOUR_MULTIPLIER);
+}
+
+void callbackOnWifiChanged() {
+  Serial.println("on wifi changed");
+  ESP.restart();
 }
 
 void publish_init() {
@@ -50,8 +56,7 @@ void publish_init() {
     // define node "sensor"
     iot.mqtt->publish(iot.constructTopic("sensor/$name"), "Sensor", false);
     iot.mqtt->publish(iot.constructTopic("sensor/$type"), "Sensor-01", false);
-    iot.mqtt->publish(iot.constructTopic("sensor/$properties"), "bahaya", false);
-    iot.mqtt->publish(iot.constructTopic("sensor/$properties"), "emergency,battery", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/$properties"), "emergency,battery,status", false);
 
     // emergency alarm
     iot.mqtt->publish(iot.constructTopic("sensor/emergency/$name"), "EMERGENCY", false);
@@ -59,12 +64,19 @@ void publish_init() {
     iot.mqtt->publish(iot.constructTopic("sensor/emergency/$retained"), "false", false);
     iot.mqtt->publish(iot.constructTopic("sensor/emergency/$datatype"), "boolean", false);
 
-    // battery status
-    iot.mqtt->publish(iot.constructTopic("sensor/battery/$name"), "Battery Status", false);
+    // battery percentage
+    iot.mqtt->publish(iot.constructTopic("sensor/battery/$name"), "Battery percentage", false);
     iot.mqtt->publish(iot.constructTopic("sensor/battery/$settable"), "false", false);
     iot.mqtt->publish(iot.constructTopic("sensor/battery/$retained"), "true", false);
-    iot.mqtt->publish(iot.constructTopic("sensor/battery/$datatype"), "String", false);
-    iot.mqtt->publish(iot.constructTopic("sensor/battery/$unit"), "", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/battery/$datatype"), "integer", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/battery/$unit"), "%", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/battery/$format"), "0:100", false);
+
+    // battery status
+    iot.mqtt->publish(iot.constructTopic("sensor/status/$name"), "charging status", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/status/$settable"), "false", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/status/$retained"), "true", false);
+    iot.mqtt->publish(iot.constructTopic("sensor/status/$datatype"), "String", false);
 
     iot.mqtt->publish(iot.constructTopic("$state"), "ready", false);
   }

@@ -14,8 +14,9 @@
 #define HOUR_MULTIPLIER 3600000000ULL
 
 // sirene Serial Number, empty string if not used
-#define SIRENE_SN "1S5475465"
-// #define SIRENE_SN "1S1537418"
+// #define SIRENE_SN "1S1537370"
+// #define SIRENE_SN "1S1547226" // sirine manyar
+#define SIRENE_SN ""
 
 typedef struct {
   bool emergency;

@@ -18,6 +18,7 @@ void iot_init(void);
 void callbackOnConnect();
 void callbackOnAPConfigTimeout();
 void callbackOnWiFiConnectTimeout();
+void callbackOnWifiChanged();
 void publish_init();
 void iot_loop();
 void iot_publish(const char *topic, const char *payload, bool retained = true);
