@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include "global.h"
 #include "iot_mqtt.h"
 #include "my_espnow.h"
@@ -29,7 +27,6 @@ void setup() {
   pinConfig();
   Serial.begin(115200);
 
-  esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, HIGH);
   batteryCalculate();
 
   xTaskCreate(task_wifi, "wifi", 1024 * 8, NULL, 3, NULL);
@@ -46,6 +43,8 @@ void loop() {
 
 // put function definitions here:
 void task_button(void *pvParameter) {
+  esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, HIGH);
+
   bool bat_en = false;
   if (digitalRead(PIN_WIFI_RESET) == LOW) {
     status.apMode = true;
@@ -76,6 +75,8 @@ void task_button(void *pvParameter) {
 }
 
 void task_button2(void *pvParameter) {
+  esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, LOW);
+
   bool bat_en = false;
   Button mainButton(PIN_BUTTON_MAIN);
   uint8_t counter = 0;

@@ -21,6 +21,7 @@ bool pairSuccess = false;
 bool emergencyStatus = false;
 
 void my_espnow_init(void) {
+  getSerial();
   file.init();
   String fileJson = file.readFile(SPIFFS, "/peer.json");
   log_i("here");
@@ -72,6 +73,12 @@ void getMacAddress() {
   } else {
     Serial.println("Failed to read MAC address");
   }
+}
+
+String getSerial(void) {
+  String serial = String((uint32_t)(ESP.getEfuseMac() >> 32));
+  log_i("serial : %s", serial);
+  return serial;
 }
 
 void onDataSent(const uint8_t *mac, esp_now_send_status_t status) {
@@ -155,6 +162,8 @@ void my_espnow_pairing(void) {
       myPairingData.channel = channel;
       myPairingData.model = SAM_EB;
       strcpy(myPairingData.name, "EMB_nomor1");
+      getSerial().toCharArray(myPairingData.serial, 32);
+      log_i("%c", myPairingData.serial);
       esp_now_send(bcAddress, (uint8_t *)&myPairingData, sizeof(myPairingData));
 
       channel++;

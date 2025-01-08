@@ -1,6 +1,8 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <Arduino.h>
+
 #define PIN_WIFI_RESET     26
 #define PIN_BUTTON_MAIN    27
 #define PIN_BUZZER         25
