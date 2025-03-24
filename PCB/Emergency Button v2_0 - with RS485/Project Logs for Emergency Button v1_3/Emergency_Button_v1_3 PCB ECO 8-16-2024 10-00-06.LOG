@@ -1,0 +1,17 @@
+Added Pin To Net: NetName=OUT+1 Pin=P?-1
+Added Pin To Net: NetName=OUT+1 Pin=P?-1
+Added Pin To Net: NetName=VCC Pin=P?-2
+Added Pin To Net: NetName=VCC Pin=P?-2
+Added Pin To Net: NetName=NetLabel213 Pin=P?-3
+Added Pin To Net: NetName=NetLabel213 Pin=P?-3
+Added Net: Name=NetLabel213
+Added Pin To Net: NetName=NetLabel214 Pin=P?-4
+Added Pin To Net: NetName=NetLabel214 Pin=P?-4
+Added Net: Name=NetLabel214
+Added Pin To Net: NetName=NetLabel215 Pin=P?-5
+Added Pin To Net: NetName=NetLabel215 Pin=P?-5
+Added Net: Name=NetLabel215
+Added Pin To Net: NetName=NetLabel216 Pin=P?-6
+Added Pin To Net: NetName=NetLabel216 Pin=P?-6
+Added Net: Name=NetLabel216
+Added Member To Class: ClassName=Emergency_Button_v1_3 Member=Component P? Header 6

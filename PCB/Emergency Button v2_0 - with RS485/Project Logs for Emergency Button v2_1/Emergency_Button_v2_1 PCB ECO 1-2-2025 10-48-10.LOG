@@ -1,0 +1,12 @@
+Change Component Comment : Designator=SW1 Old Comment=1825027-5 New Comment=Wifi Reset
+Change Component Comment : Designator=P4 Old Comment=Header 6 New Comment=Flash port
+Change Component Comment : Designator=P1 Old Comment=Header 9 New Comment=PCB connector
+Change Component Comment : Designator=P2 Old Comment=Header 9 New Comment=PCB Connector
+Change Component Description : Designator=U4 Old Description=1/1 Transceiver Half RS422, RS485 8-SOIC New Description=half duplex RS485
+Change Component Description : Designator=J1 Old Description=2.0 x 6.5 mm, 2.5 A, Horizontal, Through Hole, Dc Power Jack Connector New Description=DC Power Jack
+Change Component Description : Designator=P6 Old Description=Header, 2-Pin New Description=JST-XH, 2-Pin
+Change Component Description : Designator=D1 Old Description=LED Uni-Color Green 4-Pin Chip 0805 T/R New Description=LED Red
+Change Component Description : Designator=U1 Old Description=Linear Voltage Regulator IC Positive Fixed 1 Output 600mA SOT-25 New Description=Linear Voltage Regulator Output 600mA
+Change Component Description : Designator=J2 Old Description=RX TXRX MOD WIFI TRACE ANT SMD New Description=ESP32-WROOM-32E
+Change Component Description : Designator=SW1 Old Description=Switch Tactile OFF (ON) SPST Round Button PC Pins 0.05A 24VDC 1.57N Thru-Hole Loose Piece New Description=Tactile Switch Right Angle
+Change Class Name : Old Net Name=Emergency_Button_v2_0 New Net Name=Emergency_Button_v2_1

@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=VCC Pin=U4-3
+Added Pin To Net: NetName=485_EN Pin=J2-16
+Added Pin To Net: NetName=485_EN Pin=U4-3
+Added Net: Name=485_EN

@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=B+ Pin=S1-2
+Added Component: Designator=SB1(SOLDER BRIDGE 3)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=+5 Pin=SB1-1
+Added Pin To Net: NetName=B+ Pin=SB1-2
+Added Pin To Net: NetName=NetS1_2 Pin=S1-2
+Added Pin To Net: NetName=NetS1_2 Pin=SB1-3
+Added Net: Name=NetS1_2
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component SB1 solder bridge 3pin

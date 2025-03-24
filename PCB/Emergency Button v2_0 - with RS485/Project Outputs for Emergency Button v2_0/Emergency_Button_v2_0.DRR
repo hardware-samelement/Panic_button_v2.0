@@ -1,0 +1,26 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: Emergency_Button_v2_0.PcbDoc   9/13/2024  15:19:15
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : Emergency_Button_v2_0.TXT
+ASCII RectHoles File : Emergency_Button_v2_0-RectHoles.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      20mil (0.5mm)                                             Round             3         PTH        0.00inch (0.00mm)
+T2      24mil (0.599mm)                                           Round             24        PTH        0.00inch (0.00mm)
+T3      28mil (0.711mm)                                           Round             42        PTH        0.00inch (0.00mm)
+T4      32mil (0.8mm)                                             Round             3         PTH        0.00inch (0.00mm)
+T5      35mil (0.899mm)                                           Round             31        PTH        0.00inch (0.00mm)
+T6      39mil (0.991mm)                                           Round             2         PTH        0.00inch (0.00mm)
+T7      39mil (1.001mm)                                           Rectangle         3         PTH        0.00inch (0.00mm)
+T8      41mil (1.049mm)                                           Round             2         PTH        0.00inch (0.00mm)
+T9      51mil (1.3mm)                                             Round             2         PTH        0.00inch (0.00mm)
+T10     63mil (1.6mm)                                             Round             2         PTH        0.00inch (0.00mm)
+T11     63mil (1.6mm)                                             Rectangle         1         PTH        0.00inch (0.00mm)
+T12     67mil (1.699mm)                                           Rectangle         1         PTH        0.00inch (0.00mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              116
+
+Total Processing Time (hh:mm:ss) : 00:00:00

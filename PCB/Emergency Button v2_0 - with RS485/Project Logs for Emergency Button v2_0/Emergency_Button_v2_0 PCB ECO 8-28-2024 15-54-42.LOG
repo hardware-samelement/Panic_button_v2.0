@@ -1,0 +1,32 @@
+Removed Pin From Net: NetName=RX0 Pin=R4-1
+Removed Pin From Net: NetName=VCC Pin=R4-2
+Removed Pin From Net: NetName=TX0 Pin=R6-1
+Removed Pin From Net: NetName=RX0 Pin=U4-1
+Removed Pin From Net: NetName=TX0 Pin=U4-4
+Change Component Designator: OldDesignator=R5 NewDesignator=R4
+Change Component Designator: OldDesignator=R6 NewDesignator=R5
+Change Component Designator: OldDesignator=R7 NewDesignator=R6
+Change Component Designator: OldDesignator=R8 NewDesignator=R7
+Change Component Designator: OldDesignator=R9 NewDesignator=R8
+Change Component Designator: OldDesignator=R10 NewDesignator=R9
+Change Component Designator: OldDesignator=R11 NewDesignator=R10
+Change Component Designator: OldDesignator=R12 NewDesignator=R11
+Change Component Designator: OldDesignator=R13 NewDesignator=R12
+Change Component Designator: OldDesignator=R14 NewDesignator=R13
+Change Component Designator: OldDesignator=R15 NewDesignator=R14
+Change Component Designator: OldDesignator=R16 NewDesignator=R15
+Change Component Designator: OldDesignator=R17 NewDesignator=R16
+Change Component Designator: OldDesignator=R18 NewDesignator=R17
+Change Component Designator: OldDesignator=R19 NewDesignator=R18
+Change Net Name : Old Net Name=NetR15_2 New Net Name=NetR14_2
+Added Pin To Net: NetName=TX2 Pin=J2-28
+Added Pin To Net: NetName=TX2 Pin=R5-1
+Added Pin To Net: NetName=TX2 Pin=U4-4
+Added Net: Name=TX2
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R7 R 120
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R9 R 10K
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R10 R 10K
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R12 R 10K
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R14 R 10K
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R16 R 10K
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component R18 R 1K

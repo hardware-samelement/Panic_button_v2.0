@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=RS485_B Pin=P1-8
+Added Pin To Net: NetName=RS485_A Pin=P1-9
+Added Pin To Net: NetName=RS485_B Pin=P2-8
+Added Pin To Net: NetName=RS485_A Pin=P2-9

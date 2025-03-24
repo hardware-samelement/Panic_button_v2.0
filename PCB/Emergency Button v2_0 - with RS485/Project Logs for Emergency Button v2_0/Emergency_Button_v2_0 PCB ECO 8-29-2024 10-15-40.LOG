@@ -1,0 +1,6 @@
+Change Component Designator: OldDesignator=P? NewDesignator=P1
+Change Component Designator: OldDesignator=P? NewDesignator=P2
+Change Net Name : Old Net Name=NetP?_1 New Net Name=NetP1_1
+Change Net Name : Old Net Name=NetP?_8 New Net Name=NetP1_8
+Change Net Name : Old Net Name=NetP?_9 New Net Name=NetP1_9
+Added Member To Class: ClassName=Emergency_Button_v2_0 Member=Component P2 Header 9
