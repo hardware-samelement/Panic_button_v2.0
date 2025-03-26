@@ -46,7 +46,6 @@ void setup() {
 
     xTaskCreate(task_button2, "button2", 1024 * 2, NULL, 1, NULL); // momentary NO switch
   }
-
   xTaskCreate(task_led, "led", 1024, NULL, 1, NULL);
   xTaskCreate(task_buzzer, "buzzer", 1024, NULL, 1, NULL);
 }
@@ -59,13 +58,22 @@ void loop() {
 void task_button(void *pvParameter) {
   esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, HIGH);
 
-  bool bat_en = false;
   if (digitalRead(PIN_WIFI_RESET) == LOW) {
-    status.apMode = true;
-    Serial.println("apMode detected");
+    if (connectionType == CONNECTION_WiFi) {
+      status.apMode = true;
+      Serial.println("apMode detected");
+    } else if (connectionType == CONNECTION_ESPNOW) {
+      pairingMode = true;
+      Serial.println("Pairing Mode detected");
+    }
   } else {
-    status.apMode = false;
-    Serial.println("no AP mode");
+    if (connectionType == CONNECTION_WiFi) {
+      status.apMode = false;
+      Serial.println("no apMode detected");
+    } else if (connectionType == CONNECTION_ESPNOW) {
+      pairingMode = false;
+      Serial.println("no Pairing Mode detected");
+    }
   }
 
   while (1) {
@@ -76,14 +84,6 @@ void task_button(void *pvParameter) {
       status.emergency = false;
       led.offDelay = 500;
     }
-
-    // if (digitalRead(PIN_WIFI_RESET) == LOW) {
-    //   if (bat_en == false) {
-    //     bat_en = true;
-    //   } else bat_en = false;
-    //   digitalWrite(PIN_BAT_ADC_ENABLE, bat_en);
-    //   vTaskDelay(100);
-    // }
     vTaskDelay(10);
   }
 }
@@ -91,7 +91,6 @@ void task_button(void *pvParameter) {
 void task_button2(void *pvParameter) {
   esp_sleep_enable_ext0_wakeup(PIN_WAKE_UP, LOW);
 
-  bool bat_en = false;
   Button mainButton(PIN_BUTTON_MAIN);
   uint8_t counter = 0;
   esp_reset_reason_t resetReason = esp_reset_reason();
@@ -232,9 +231,17 @@ void task_wifi(void *pvParameter) {
       sprintf(batteryPercentageBuffer, "%d", battery.percentage);
       iot_publish("sensor/battery", batteryPercentageBuffer);
 
+      // wait for emergency status true, max 3 second
+      for (int i = 0; i < 30; i++) {
+        if (status.emergecy) {
+          break;
+        }
+        vTaskDelay(100);
+      }
+
       // send emergency
       while (status.emergency) {
-        // timer for publish, 1 count = 1s, publish every 30 second.
+        // timer for publish, 1 count = 1s, publish every 10 second.
         if (counter == 0) {
           iot_publish("sensor/emergency", "true");
           if (SIRENE_SN != "") {
@@ -282,7 +289,15 @@ void task_espnow(void *pvParameter) {
       pairingMode = false;
     }
 
-    if (status.emergency) {
+    // wait for emergency status true, max 3 second
+    for (int i = 0; i < 30; i++) {
+      if (status.emergecy) {
+        break;
+      }
+      vTaskDelay(100);
+    }
+
+    while (status.emergency) {
       myData.msgType = DATA;
       myData.emergencyStatus = status.emergency;
       myData.batteryStatus = battery.isCharging;
@@ -291,20 +306,16 @@ void task_espnow(void *pvParameter) {
       vTaskDelay(1000);
     }
 
-    if (status.emergency == false && temp == true) {
+    if (!status.emergency) {
       myData.msgType = DATA;
       myData.emergencyStatus = status.emergency;
       esp_now_send(NULL, (uint8_t *)&myData, sizeof(myData));
     }
 
-    temp = status.emergency;
-
-    if (digitalRead(PIN_BUTTON_MAIN) == HIGH) {
-      if (!(status.emergency || pairingMode)) {
-        Serial.println("sleeping");
-        vTaskDelay(500);
-        ESP.deepSleep(24 * HOUR_MULTIPLIER);
-      }
+    if (!(status.emergency || pairingMode)) {
+      Serial.println("sleeping");
+      vTaskDelay(500);
+      ESP.deepSleep(24 * HOUR_MULTIPLIER);
     }
   }
   vTaskDelay(1);
